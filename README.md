@@ -26,5 +26,3 @@ To run the game, execute the following command:
 ```sh
 python3 main.py
 ```
-
-## TODO: fix errors

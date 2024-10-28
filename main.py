@@ -21,7 +21,7 @@ class Pawn(ChessPiece):
             return True
 
         # Пешка может двигаться на две клетки вперед с начальной позиции
-        if start_col == end_col and board[end_row][end_col] == '.' and end_row == start_row + 2 * direction and (start_row == 1 or start_row == 7):
+        if start_col == end_col and board[end_row][end_col] == '.' and end_row == start_row + 2 * direction and ((self.color == 'white' and start_row == 1) or (self.color == 'black' and start_row == 6)):
             return True
 
         # Пешка может бить фигуру противника по диагонали
@@ -110,7 +110,6 @@ class ChessBoard:
         self.board[0][5] = Bishop('white')
         self.board[0][6] = Knight('white')
         self.board[0][7] = Rook('white')
-        self.board[0][8] = Rook('white')
         self.board[1] = [Pawn('white') for _ in range(9)]
 
         # Расставляем черные фигуры
@@ -122,7 +121,6 @@ class ChessBoard:
         self.board[8][5] = Bishop('black')
         self.board[8][6] = Knight('black')
         self.board[8][7] = Rook('black')
-        self.board[8][8] = Rook('black')
         self.board[7] = [Pawn('black') for _ in range(9)]
 
     def print_board(self):
@@ -219,7 +217,7 @@ class ChessBoard:
                                 original_piece = self.board[r][c]
                                 self.board[r][c] = self.board[row][col]
                                 self.board[row][col] = '.'
-                                if not self.is_square_attacked(king_pos, 'black' if self.white_turn else 'white'):
+                                if not self.is_square_attacked((r, c), 'black' if self.white_turn else 'white'):
                                     self.board[row][col] = self.board[r][c]
                                     self.board[r][c] = original_piece
                                     return False
